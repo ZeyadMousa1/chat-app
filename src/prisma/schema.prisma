@@ -11,23 +11,23 @@ datasource db {
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  name          String
+  userId            String      @id 
+  userName      String
   email         String   @unique
   image         String
   password      String
-  is_onine      Boolean  @default(false)
+  isOnline       Boolean  @default(false)
   timestamp     DateTime @default(now())
   chatsSent     Chat[]   @relation("sentChats")
   ChatsReceived Chat[]   @relation("receivedChats")
 }
 
 model Chat {
-  id         Int      @id @default(autoincrement())
+  chatId         String      @id 
   message    String
   timestamp  DateTime @default(now())
-  senderId   Int
-  receiverId Int
-  sender     User     @relation("sentChats", fields: [senderId], references: [id])
-  receiver   User     @relation("receivedChats", fields: [receiverId], references: [id])
+  senderId   String
+  receiverId String
+  sender     User     @relation("sentChats", fields: [senderId], references: [userId])
+  receiver   User     @relation("receivedChats", fields: [receiverId], references: [userId])
 }
