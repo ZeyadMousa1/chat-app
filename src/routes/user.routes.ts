@@ -1,9 +1,10 @@
 import express from 'express';
-import { signInHandler, signUpHandler } from '../handlers/authHandler';
 import asyncHandler from 'express-async-handler';
+import { findAllUsers, findUser } from '../handlers/userHandler';
+import { authMiddelware } from '../middelwares/auth';
 
 export const userRouter = express.Router();
 
-userRouter.route('/signup').post(asyncHandler(signUpHandler));
+userRouter.route('/:userId').get(asyncHandler(findUser));
 
-userRouter.route('/signin').post(asyncHandler(signInHandler));
+userRouter.route('/').get(authMiddelware, asyncHandler(findAllUsers));
