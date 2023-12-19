@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { authRouter } from './routes/auth.routes';
 import { userRouter } from './routes/user.routes';
 import { chatRouter } from './routes/chat.routes';
+import { messageRouter } from './routes/message.routes';
 import morgan from 'morgan';
 
 const app = express();
@@ -17,5 +18,6 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/chats', chatRouter);
+app.use('/api/v1/messages', messageRouter);
 
 app.listen(process.env.PORT, () => console.log('Chat App Start...'));

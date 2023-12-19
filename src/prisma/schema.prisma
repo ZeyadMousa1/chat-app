@@ -20,7 +20,7 @@ model User {
   timestamp        DateTime  @default(now())
   chats            Chat[]
   sentMessages     Message[] @relation("SenderMessages")
-  receivedMessages Message[] @relation("ReceiverMessages")
+  // receivedMessages Message[] @relation("ReceiverMessages")
 }
 
 model Chat {
@@ -38,8 +38,8 @@ model Message {
   content    String
   senderId   String
   sender     User     @relation(name: "SenderMessages", fields: [senderId], references: [userId])
-  receiverId String
-  receiver   User     @relation(name: "ReceiverMessages", fields: [receiverId], references: [userId])
+  // receiverId String
+  // receiver   User     @relation(name: "ReceiverMessages", fields: [receiverId], references: [userId])
   chatId     String
   chat       Chat     @relation(fields: [chatId], references: [id])
 }
