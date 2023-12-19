@@ -4,6 +4,7 @@ import { Prisma, PrismaClient } from '@prisma/client';
 import { PasswordServices } from '../utils/passwordService';
 import crypto from 'crypto';
 import { jwtSign } from '../utils/auth';
+import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
@@ -80,3 +81,9 @@ export const signInHandler: ExpressHandler<{}, SignInRequest, SignInResponse, {}
         jwtToken,
     });
 };
+
+// export const logout: ExpressHandler<{}, {}, {}, {}> = async (req, res, next) => {
+//     const token = req.headers.authorization?.split(' ')[1];
+
+//     jwt.sign(token,"",{expiresIn: 1})
+// }

@@ -11,23 +11,35 @@ datasource db {
 }
 
 model User {
-  userId            String      @id 
-  userName      String
-  email         String   @unique
-  image         String
-  password      String
-  isOnline       Boolean  @default(false)
-  timestamp     DateTime @default(now())
-  chatsSent     Chat[]   @relation("sentChats")
-  ChatsReceived Chat[]   @relation("receivedChats")
+  userId           String    @id
+  userName         String
+  email            String    @unique
+  image            String
+  password         String
+  isOnline         Boolean   @default(false)
+  timestamp        DateTime  @default(now())
+  chats            Chat[]
+  sentMessages     Message[] @relation("SenderMessages")
+  receivedMessages Message[] @relation("ReceiverMessages")
 }
 
 model Chat {
-  chatId         String      @id 
-  message    String
-  timestamp  DateTime @default(now())
+  id        String    @id
+  createdAt DateTime  @default(now())
+  updateAt  DateTime  @updatedAt
+  members   User[]
+  messages  Message[]
+}
+
+model Message {
+  id         String   @id
+  createdAt  DateTime @default(now())
+  updateAt   DateTime @updatedAt
+  content    String
   senderId   String
+  sender     User     @relation(name: "SenderMessages", fields: [senderId], references: [userId])
   receiverId String
-  sender     User     @relation("sentChats", fields: [senderId], references: [userId])
-  receiver   User     @relation("receivedChats", fields: [receiverId], references: [userId])
+  receiver   User     @relation(name: "ReceiverMessages", fields: [receiverId], references: [userId])
+  chatId     String
+  chat       Chat     @relation(fields: [chatId], references: [id])
 }
